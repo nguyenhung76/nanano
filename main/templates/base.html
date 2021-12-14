@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ecommerce Bootstrap Template</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome-free/css/all.min.css' %}" />
+	<!-- Bootstrap 4 CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'bs4/bootstrap.min.css' %}" />
+	<!-- Main Jquery -->
+	<script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+	<!-- Bootstrap 4 JS -->
+	<script type="text/javascript" src="{% static 'bs4/bootstrap.min.js' %}"></script>
+	<!-- CustomJs -->
+	<link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}" />
+	<script type="text/javascript" src="{% static 'custom.js' %}"></script>
+</head>
+<body>
+	<nav class=" navbar-expand-lg " >
+		<div class=" border-bottom navbar fixed-top navbar-expand-lg navbar-light scrolling-navbar" style="background-color:white; height:45px">
+		  {% comment %} <a class="navbar-brand" href="/">Nanano</a> {% endcomment %}
+		  {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button> {% endcomment %}
+		  	<div class="collapse navbar-collapse" id="navbarNav" >
+		  	{% comment %} <form class="form-inline my-2 my-lg-0" action="/search">
+		      <div class="input-group">
+				  <input name="q" type="text" class="form-control" placeholder="search" />
+				  <div class="input-group-append">
+				    <button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+				  </div>
+				</div>
+		    </form> {% endcomment %}
+		    <ul class="navbar-nav ml-auto" style=" margin-right:130px">
+		      	<li class="nav-item">
+		        	<a class="nav-link" style="color:#888888; font-size : 14px" href="/">Trang chủ</a>
+		      	</li>
+		      	<li class="nav-item">
+		        	<a class="nav-link" style="color:#888888; font-size : 14px" href="{% url 'category-list' %}">Thể loại</a>
+		      	</li>
+		      	<li class="nav-item">
+		        	<a class="nav-link" style="color:#888888; font-size : 14px" href="{% url 'brand-list' %}">Thương hiệu</a>
+		      	</li>
+		      	<li class="nav-item">
+		        	<a class="nav-link" style="color:#888888; font-size : 14px" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Giỏ hàng (<span class="cart-list">{{request.session.cartdata|length}}</span>)</a>
+		      	</li>
+		        {% if user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link" style="color:#888888; font-size : 14px" href="{% url 'my_dashboard' %}">Tài khoản của tôi</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style="color:#888888; font-size : 14px"  href="{% url 'logout' %}">Đăng xuất</a>
+				</li>
+				{% else %}
+				<li class="nav-item">
+					<a class="nav-link" style="color:#888888; font-size : 14px"  href="{% url 'login' %}">Đăng nhập</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" style="color:#888888; font-size : 14px"  href="{% url 'signup' %}">Đăng ký</a>
+				</li>
+		        {% endif %}
+		    </ul>
+		  </div>
+		</div>
+		<div class=" " style="height:160px; margin-top:50px">
+			<div style="float:left; position:absolute;">
+				<h3 style="line-height:90px; padding-left:250px; font-weight:bold" ><a style="color:#111; text-decoration: none;" href="/">Nanano</a></h3>
+				
+				<div class="collapse navbar-collapse" id="navbarNav">
+					{% comment %} <form class="form-inline my-2 my-lg-0" action="/search">
+					<div class="input-group">
+						<input name="q" type="text" class="form-control" placeholder="search" />
+						<div class="input-group-append">
+						<button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+						</div>
+					</div>
+				</form> {% endcomment %}
+				<ul class="navbar-nav" style="padding-left:170px ;float:left" >
+						<li class="nav-item">
+						<a class="nav-link" style="color:#353535;  font: 15px 'Open Sans','Quicksand','Helvetica Neue',Helvetica,Tahoma,Arial,Sans-serif;" 
+						href="{% url 'product-list' %}">Tất cả sản phẩm</a>
+						</li>
+						<li> 
+							{% if data1 %}
+								{% for cat in data1 %}
+								<li class="nav-item">
+									<a class="nav-link"  style="color:#353535;  font: 15px 'Open Sans','Quicksand','Helvetica Neue',Helvetica,Tahoma,Arial,Sans-serif;"
+									href="/category-product-list/{{cat.id}}">{{cat.title}}</a>
+								</li>
+								{% endfor %}
+							{% endif %}
+						</li>
+						<li>
+							{% if data2 %}
+								{% for brand in data2 %}
+								<li class="nav-item">
+									<a class="nav-link"  style="color:#353535;  font: 15px 'Open Sans','Quicksand','Helvetica Neue',Helvetica,Tahoma,Arial,Sans-serif;" 
+									href="/brand-product-list/{{brand.id}}">{{brand.title}}</a>
+								</li>
+								
+								{% endfor %}
+							{% endif %}
+						</li>
+				</ul>
+				
+				</div>
+				
+			</div>
+			<div style="float:right; margin-top:25px; margin-right:210px; position:relative;">
+				<form class="form-inline my-2 my-lg-0 " action="/search">
+					<div class="input-group" style="position:relative" >
+						<input style="width:400px; border-radius: 8px"name="q" type="text" class="form-control" placeholder="Tìm kiếm" />
+						<div class="input-group-append">
+						<button class="btn"type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="bannersmall"></div>
+		
+		<div class="carousel-inner">
+			{% for bannersmall in bannersmall %}
+				<img style="height:130px; width:100%;" src="/media/{{bannersmall.img1}}" class="d-block w-100" alt="...">
+
+			{% endfor %}	
+		</div>
+		
+		
+		<div id="carouselExampleIndicators"  style="margin-top:30px; width:80%; display:block;margin-left: auto; margin-right: auto;" class="carousel slide border" 
+		data-ride="carousel">
+			<div  style="float:left">
+				<p style="color:black; font-size : 12px; margin:3px 0px; line-height:30px; padding-left:10px" ><b style="color:blue">26</b> sản phẩm được tìm thấy</p>
+			</div>
+			<div style="float:right">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link border-right " style="color:black; font-size : 12px; margin:3px 0px" href="/">Sản phẩm mới</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link border-right " style="color:black; font-size : 12px; margin:3px 0px" href="{% url 'category-list' %}">Tên sản phẩm</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link border-right " style="color:black; font-size : 12px; margin:3px 0px" href="{% url 'brand-list' %}">Gía thấp</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link border-right " style="color:black; font-size : 12px; margin:3px 0px" href="{% url 'category-list' %}">Gía cao</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link border-right " style="color:black; font-size : 12px; margin:3px 0px" href="{% url 'brand-list' %}">Nhà sản xuất</a>
+					</li>
+					
+				</ul>
+			</div>
+			<ol class="carousel-indicators">
+			  {% for banner in banners %}
+			  {% if forloop.counter == 1 %}
+			  <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter}}" class="active"></li>
+			  {% else %}
+			  <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter}}"></li>
+			  {% endif %}
+			  {% endfor %}
+			</ol>
+			<div class="carousel-inner">
+			  {% for banner in banners %}
+			  {% if forloop.counter == 1 %}
+			  <div class="carousel-item active">
+				{% else %}
+				<div class="carousel-item">
+				{% endif %}
+				<img style="width:100%; display:block;margin-left: auto; margin-right: auto;" src="/media/{{banner.img}}"alt="...">
+			  </div>
+			  {% endfor %}
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+			  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			  <span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+			  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			  <span class="sr-only">Next</span>
+			</a>
+		  	</div>
+		</div>
+    </nav>
+	
+    {% block content %}
+    {% endblock %}
+
+<footer class="pt-4 my-md-5 pt-md-5 border-top container">
+    <div class="row">
+        <div class="col-12 col-md">
+        <a href="#">Nanano Shop</a>
+        <small class="d-block mb-3 text-muted">&copy; 2017-2021</small>
+        </div>
+        <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+            <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            <li><a class="text-muted" href="#">Another one</a></li>
+            <li><a class="text-muted" href="#">Last time</a></li>
+        </ul>
+        </div>
+        <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+            <li><a class="text-muted" href="#">Final resource</a></li>
+        </ul>
+        </div>
+        <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Locations</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+        </ul>
+        </div>
+    </div>
+    </footer>
+	
+</body>
+</html>

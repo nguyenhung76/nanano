@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="container ">
+	<!-- Featured Products -->
+	<div class="p-4" style="width:1200px">
+		<h3 style="margin: 50px 0px; font-size:40px; font-family: Roboto;">SignUp</h3>
+		<table class="table col-lg-7 mx-auto ">
+			<form class="form-group" method="post" > 
+				{% csrf_token %}
+				{{form.as_table}}
+				<tr >
+					<td>
+                        <a style="background-color: #2BBBAD; color:white; font-size:15px; line-height:35px; padding-left:50px;padding-right:50px; " class="btn_login fogot btn btn-default waves-effect waves-light" href="{% url 'login' %}">Login</a>
+					</td>
+                    <td>
+                        <input style="color:white; font-size:15px; padding: 12px 50px;" type="submit" value="Register" class="btn btn-primary" />
+                    </td>
+				</tr>
+			</form>
+		</table>
+	</div>
+</main>
+{% endblock %}
